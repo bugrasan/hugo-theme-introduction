@@ -36,8 +36,8 @@
             {{ end }}
 
             <div class="hero-foot {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in three{{ end }}">
-                <!-- Tell them all about it! -->
-                {{ partial "nav.html" . }}
+				<!-- Tell them all about it! -->
+				{{ partial "footer/text.html" . }}
             </div>
         </section> <!-- Done with Hero -->
 
@@ -45,25 +45,11 @@
         {{ $home := . }}
         {{ $pages := .Resources.ByType "page" }}
 
-        {{ with .Site.GetPage "/blog" }}
-            {{ $pages = $pages | append . }}
-        {{ end }}
-
-        {{ with .Site.GetPage "/projects" }}
-            {{ $pages = $pages | append . }}
-        {{ end }}
-
+		
         {{ range sort $pages "Params.weight" }}
         {{ if ne .Name "contact.md" }}
         {{ if .File }}
-        {{ if eq (os.Stat .File.Dir).Name "projects" }}
-            <!-- Now for some cool projects -->
-            {{ partial "home/projects.html" . }}
-        {{ else if eq (os.Stat .File.Dir).Name "blog" }}
-            <!-- Let`s show some blog posts -->
-            {{ partial "home/blog.html" . }}
-        {{ else }}
-
+		
         <!-- Range through all sections in /home execept contact.md -->
         <div class="section" id="{{ .File.TranslationBaseName }}">
             <div class="container">
@@ -96,7 +82,6 @@
         {{ end }}
         {{ end }}
         {{ end }}
-        {{ end }}
         <!-- Let`s chat, shall we? -->
         {{ with .Resources.GetMatch "contact.md" }}
         <div class="section" id="{{ .File.TranslationBaseName }}">
@@ -125,7 +110,6 @@
         <!-- End Contact section -->
         {{ end }}
 
-        {{ partial "footer/text.html" . }}
 
         <!-- End of fade in three section -->
         {{ partial "footer/scripts.html" . }}
